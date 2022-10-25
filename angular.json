@@ -105,6 +105,16 @@
               "src/**/*.html"
             ]
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "my-calander:build:production",
+            "firebaseProject": "mycalander-7e82e",
+            "firebaseHostingSite": "mycalander-7e82e"
+          }
         }
       }
     }

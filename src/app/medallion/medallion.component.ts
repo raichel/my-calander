@@ -13,12 +13,6 @@ import {
   transition,
 } from '@angular/animations';
 
-export interface IMedallion {
-  id: number;
-  name: string;
-  birthday: Date;
-}
-
 @Component({
   selector: 'app-medallion',
   templateUrl: './medallion.component.html',

@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "mycalander-7e82e"
+  },
+  "targets": {
+    "mycalander-7e82e": {
+      "hosting": {
+        "my-calander": [
+          "mycalander-7e82e"
+        ]
+      }
+    }
   }
 }

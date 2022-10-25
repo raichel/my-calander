@@ -58,6 +58,7 @@
 
   .content {
     display: grid;
+    grid-auto-flow: dense;
     margin: 82px 0px;
   }
 
