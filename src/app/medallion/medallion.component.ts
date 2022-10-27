@@ -4,6 +4,7 @@ import {
   Output,
   HostListener,
   EventEmitter,
+  Input,
 } from '@angular/core';
 import {
   trigger,
@@ -12,6 +13,7 @@ import {
   animate,
   transition,
 } from '@angular/animations';
+import { IMedallion } from '../calander.interfaces';
 
 @Component({
   selector: 'app-medallion',
@@ -32,11 +34,13 @@ export class MedallionComponent {
   // The path to the relevant medallion image file
   imagePath: string = '/assets/item.png';
 
-  @Output() medallionClicked = new EventEmitter();
+  @Input() medallion!: IMedallion;
+  @Output() medallionClicked = new EventEmitter<IMedallion>();
 
   @HostListener('mouseenter', ['$event'])
   @HostListener('mouseleave', ['$event'])
   onHover(event: MouseEvent) {
+    console.log(this.medallion.name);
     const direction = event.type === 'mouseenter' ? 'in' : 'out';
     // const host = event.target as HTMLElement;
     // const w = host.offsetWidth;

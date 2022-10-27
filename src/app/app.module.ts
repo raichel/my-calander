@@ -8,19 +8,24 @@ import { PanelComponent } from './panel/panel.component';
 import { MaterialModule } from './material.module';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { MedallionDialogComponent } from './medallion-dialog/medallion-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, MedallionComponent, PanelComponent],
+  declarations: [
+    AppComponent,
+    MedallionComponent,
+    PanelComponent,
+    MedallionDialogComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MaterialModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -24,8 +24,8 @@
 
 <div class="content" role="main">
   <app-panel class="app-panel"></app-panel>
-  <app-medallion *ngFor="let medallion of calander.medallions" [style.gridColumn]="medallion.birthday.getMonth() + 1"
-    (click)="onMedallionClick(medallion, '300ms', '150ms')"></app-medallion>
+  <app-medallion *ngFor="let medallion of currentCalander?.medallions" [style.gridColumn]="medallion.birthday.getMonth() + 1"
+    [medallion]="medallion" (click)="onMedallionClick(medallion, '300ms', '150ms')"></app-medallion>
 </div>
 <footer>
   <button mat-fab color="primary" aria-label="Add Medallion" (click)="onAddMedallionClick()">

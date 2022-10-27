@@ -1,71 +1,52 @@
-import { Component } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Firestore, collectionData, docData } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import {
-  CollectionReference,
-  DocumentData,
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from '@firebase/firestore';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { CalanderFirebaseService } from './calander-firebase-service';
+import { ICalander, IMedallion } from './calander.interfaces';
+import { MedallionDialogComponent } from './medallion-dialog/medallion-dialog.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  calanderCollection: CollectionReference<DocumentData>;
+export class AppComponent implements OnInit {
+  currentCalander!: any;
+  CAL_ID = 'KBC9R47L5sTbrsnbFkLJ';
 
   constructor(
     private dialog: MatDialog,
-    private readonly firestore: Firestore
-  ) {
-    this.calanderCollection = collection(this.firestore, 'calanders');
+    private calanderService: CalanderFirebaseService
+  ) {}
+
+  ngOnInit() {
+    this.calanderService
+      .getById(this.CAL_ID)
+      .valueChanges()
+      .subscribe((data) => {
+        this.currentCalander = data;
+        this.currentCalander.medallions.forEach((medallion: any) => {
+          medallion.birthday = medallion.birthday.toDate();
+        });
+      });
   }
 
-  getAll() {
-    return collectionData(this.calanderCollection, {
-      idField: 'id',
-    }) as Observable<ICalander[]>;
+  updateCalander(id: string, data: any): void {
+    this.calanderService
+      .edit(id, data)
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((err: any) => console.log(err));
   }
 
-  get(id: string) {
-    const calanderDocumentReference = doc(this.firestore, `calanders/${id}`);
-    return docData(calanderDocumentReference, { idField: 'id' });
+  deleteCalander(id: string): void {
+    this.calanderService
+      .delete(id)
+      .then(() => {
+        console.log('Calander deleted successfully!');
+      })
+      .catch((err: any) => console.log(err));
   }
-
-  create(calander: ICalander) {
-    return addDoc(this.calanderCollection, calander);
-  }
-
-  update(calander: ICalander) {
-    const calanderDocumentReference = doc(
-      this.firestore,
-      `calander/${calander.id}`
-    );
-    return updateDoc(calanderDocumentReference, { ...calander });
-  }
-
-  delete(id: string) {
-    const calanderDocumentReference = doc(this.firestore, `calander/${id}`);
-    return deleteDoc(calanderDocumentReference);
-  }
-
-  calander: ICalander = {
-    id: 1,
-    title: 'First Calander',
-    medallions: [
-      { name: 'Meirav', birthday: new Date('11-03-1977') },
-      { name: 'Eran', birthday: new Date('12-15-1973') },
-      { name: 'Itamar', birthday: new Date('08-14-2009') },
-      { name: 'Amitai', birthday: new Date('09-08-2011') },
-      { name: 'Beeri', birthday: new Date('07-05-2014') },
-    ],
-  };
 
   onMedallionClick(
     medallion: IMedallion,
@@ -73,7 +54,7 @@ export class AppComponent {
     exitAnimationDuration: string
   ): void {
     console.log(`Medallion ${medallion.name} has been clicked`);
-    this.dialog.open(MedallionDialog, {
+    this.dialog.open(MedallionDialogComponent, {
       width: '250px',
       enterAnimationDuration,
       exitAnimationDuration,
@@ -85,38 +66,10 @@ export class AppComponent {
 
   onAddMedallionClick(): void {
     console.log(`Add Medallion clicked`);
-    this.calander.medallions.push({
+    this.currentCalander.medallions.push({
       name: 'new name',
       birthday: new Date(),
     });
-    this.create(this.calander);
+    this.updateCalander(this.CAL_ID, this.currentCalander);
   }
-}
-
-import { Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-@Component({
-  templateUrl: './medallion/medallion-dialog.html',
-})
-export class MedallionDialog {
-  medallion: IMedallion;
-
-  constructor(
-    public dialogRef: MatDialogRef<MedallionDialog>,
-    @Inject(MAT_DIALOG_DATA) data: any
-  ) {
-    this.medallion = data.medallion;
-  }
-}
-
-export interface ICalander {
-  id: number;
-  title: string;
-  medallions: IMedallion[];
-}
-
-export interface IMedallion {
-  name: string;
-  birthday: Date;
 }
