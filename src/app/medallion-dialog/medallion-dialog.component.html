@@ -1,17 +1,25 @@
-<h1 mat-dialog-title>{{medallion.name}}</h1>
-<mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>שם</mat-label>
-    <input matInput placeholder="Input" [(ngModel)]="name">
-</mat-form-field>
-<mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Choose a date</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="birthday">
-    <mat-hint>MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matSuffix [for]="picker">
-        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-    </mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
-<button mat-fab color="primary" aria-label="Done" (click)="onDoneClicked()">
-    <mat-icon fontIcon="done"> </mat-icon>
-</button>
+<h1 mat-dialog-title class="header">כאן אפשר לערוך את המדליון</h1>
+<div mat-dialog-content [dir]='"rtl"'>
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>שם</mat-label>
+        <input matInput placeholder="זה המקום להקליד שם" [(ngModel)]="name" dir="rtl">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>תאריך לידה</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="birthday">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+</div>
+<BR><BR><BR><BR>
+<div mat-dialog-actions align="end" >
+    <button mat-fab color="secondary" aria-label="Close" (click)="onCancelClicked()">
+        <mat-icon fontIcon="close"> </mat-icon>
+    </button>
+    <button mat-fab color="primary" aria-label="Done" (click)="onDoneClicked()">
+        <mat-icon fontIcon="done"> </mat-icon>
+    </button>
+</div>

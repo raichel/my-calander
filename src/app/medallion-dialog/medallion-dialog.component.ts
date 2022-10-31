@@ -27,4 +27,8 @@ export class MedallionDialogComponent {
   onDoneClicked() {
     this.dialogRef.close({ name: this.name, birthday: this.birthday });
   }
+
+  onCancelClicked() {
+    this.dialogRef.close();
+  }
 }

@@ -5,9 +5,9 @@ img {
     display: block;
 }
 .text-container {
-    position: relative;
-    top: var(--top);
-    left: var(--left);
+    position: absolute;
+    margin-top: var(--top);
+    margin-left: var(--left);
     font-size: var(--fontSize);
     color: var(--fontColor);
     text-align: center;

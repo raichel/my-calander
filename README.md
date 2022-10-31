@@ -27,7 +27,9 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 # TODO
-- Set initial default calander => Click on "Build my own"
-- Editable panel (Months names? Theme?)
+
+- Set initial default calander => Click on "Build my own" => select theme
+- Change theme at any time
+- Edit popup (Design, medal theme)
 - Add chains
 - Build the cal => Submit => Signup (The calader is saved under the user name) => Pay (Payment info and shipment details)

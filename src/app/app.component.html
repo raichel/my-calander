@@ -6,7 +6,7 @@
 </div>
 
 <div class="content">
-  <div class="calander-container">
+  <div class="calander-container" *ngIf="currentTheme != undefined" >
     <app-panel class="app-panel" [image]="currentTheme.image"></app-panel>
     <app-medallion *ngFor="let medallion of currentCalander?.medallions"
       [style.gridColumn]="12 - medallion.birthday.getMonth()" [medallion]="medallion"

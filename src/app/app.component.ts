@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
     console.log(`Medallion ${medallion.name} has been clicked`);
     this.dialog
       .open(MedallionDialogComponent, {
-        width: '250px',
+        width: '600px',
         enterAnimationDuration,
         exitAnimationDuration,
         data: {
@@ -80,8 +80,10 @@ export class AppComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((result) => {
-        medallion.name = result['name'];
-        medallion.birthday = result['birthday'];
+        if (result) {
+          medallion.name = result['name'];
+          medallion.birthday = result['birthday'];
+        }
       });
   }
 

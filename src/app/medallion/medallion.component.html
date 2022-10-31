@@ -1,6 +1,6 @@
 <div [@hover]="state">
     <img [src]="'/assets/' + theme.image" class="image"/>
-    <div class="text-container" style="--top:{{theme.top + 'px'}};--left:{{theme.left + 'px'}};--fontSize:{{theme.fontSize + 'px'}};--fontColor:{{theme.fontColor}}">
+    <div class="text-container" style="--top:{{theme.top + '%'}};--left:{{theme.left + '%'}};--fontSize:{{theme.fontSize + 'px'}};--fontColor:{{theme.fontColor}}">
         {{medallion.name}}<br>{{medallion.birthday | date:'dd/MM/YYYY'}}
     </div>
 </div>
