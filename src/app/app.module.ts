@@ -6,9 +6,9 @@ import { AppComponent } from './app.component';
 import { MedallionComponent } from './medallion/medallion.component';
 import { PanelComponent } from './panel/panel.component';
 import { MaterialModule } from './material.module';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
+import { FormsModule } from '@angular/forms';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { MedallionDialogComponent } from './medallion-dialog/medallion-dialog.component';
 
@@ -21,6 +21,7 @@ import { MedallionDialogComponent } from './medallion-dialog/medallion-dialog.co
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MaterialModule,

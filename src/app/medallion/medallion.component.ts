@@ -13,7 +13,7 @@ import {
   animate,
   transition,
 } from '@angular/animations';
-import { IMedallion } from '../calander.interfaces';
+import { IMedallion, IMedallionTheme } from '../calander.interfaces';
 
 @Component({
   selector: 'app-medallion',
@@ -31,16 +31,14 @@ import { IMedallion } from '../calander.interfaces';
 })
 export class MedallionComponent {
   state: string = 'default';
-  // The path to the relevant medallion image file
-  imagePath: string = '/assets/item.png';
 
   @Input() medallion!: IMedallion;
+  @Input() theme!: IMedallionTheme;
   @Output() medallionClicked = new EventEmitter<IMedallion>();
 
   @HostListener('mouseenter', ['$event'])
   @HostListener('mouseleave', ['$event'])
   onHover(event: MouseEvent) {
-    console.log(this.medallion.name);
     const direction = event.type === 'mouseenter' ? 'in' : 'out';
     // const host = event.target as HTMLElement;
     // const w = host.offsetWidth;

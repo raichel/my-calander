@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CalanderFirebaseService } from './calander-firebase-service';
+import { CalanderFirebaseService } from './calander-firebase.service';
 
 describe('CalanderFirebaseService', () => {
   let service: CalanderFirebaseService;

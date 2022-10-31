@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CalanderFirebaseService } from './calander-firebase-service';
-import { ICalander, IMedallion } from './calander.interfaces';
+import { CalanderFirebaseService } from './calander-firebase.service';
+import { ThemeFirebaseService } from './theme-firebase.service';
+import { ICalander, IMedallion, ICalanderTheme } from './calander.interfaces';
 import { MedallionDialogComponent } from './medallion-dialog/medallion-dialog.component';
 
 @Component({
@@ -10,12 +11,15 @@ import { MedallionDialogComponent } from './medallion-dialog/medallion-dialog.co
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  currentCalander!: any;
+  currentCalander!: ICalander;
+  currentTheme!: ICalanderTheme;
   CAL_ID = 'KBC9R47L5sTbrsnbFkLJ';
+  DEFAULT_THEME_ID = 'Off1vYew6Q3QumSmZwFn';
 
   constructor(
     private dialog: MatDialog,
-    private calanderService: CalanderFirebaseService
+    private calanderService: CalanderFirebaseService,
+    private themeService: ThemeFirebaseService
   ) {}
 
   ngOnInit() {
@@ -23,16 +27,27 @@ export class AppComponent implements OnInit {
       .getById(this.CAL_ID)
       .valueChanges()
       .subscribe((data) => {
-        this.currentCalander = data;
-        this.currentCalander.medallions.forEach((medallion: any) => {
-          medallion.birthday = medallion.birthday.toDate();
-        });
+        if (data != undefined) {
+          this.currentCalander = data;
+          this.currentCalander.medallions.forEach((medallion: any) => {
+            medallion.birthday = medallion.birthday.toDate();
+          });
+          // Load the theme for this this.currentCalander
+          this.themeService
+            .getById(this.currentCalander.themeId)
+            .valueChanges()
+            .subscribe((data) => {
+              if (data != undefined) {
+                this.currentTheme = data;
+              }
+            });
+        }
       });
   }
 
-  updateCalander(id: string, data: any): void {
+  updateCalander(id: string, calander: ICalander): void {
     this.calanderService
-      .edit(id, data)
+      .edit(id, calander)
       .then(() => {
         console.log('updated successfully');
       })
@@ -54,21 +69,30 @@ export class AppComponent implements OnInit {
     exitAnimationDuration: string
   ): void {
     console.log(`Medallion ${medallion.name} has been clicked`);
-    this.dialog.open(MedallionDialogComponent, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-      data: {
-        medallion: medallion,
-      },
-    });
+    this.dialog
+      .open(MedallionDialogComponent, {
+        width: '250px',
+        enterAnimationDuration,
+        exitAnimationDuration,
+        data: {
+          medallion: medallion,
+        },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        medallion.name = result['name'];
+        medallion.birthday = result['birthday'];
+      });
   }
 
   onAddMedallionClick(): void {
-    console.log(`Add Medallion clicked`);
     this.currentCalander.medallions.push({
       name: 'new name',
       birthday: new Date(),
+      // Select a random image from the selected theme's medallions
+      medalThemeId: Math.floor(
+        Math.random() * this.currentTheme.medallions.length
+      ),
     });
     this.updateCalander(this.CAL_ID, this.currentCalander);
   }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ICalander } from '../calander.interfaces';
 
 @Component({
   selector: 'app-panel',
@@ -6,5 +7,5 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./panel.component.css'],
 })
 export class PanelComponent {
-  imagePath: string = '/assets/panel.png';
+  @Input() image!: string;
 }
