@@ -87,7 +87,7 @@ export class AppComponent implements OnInit {
 
   onAddMedallionClick(): void {
     this.currentCalander.medallions.push({
-      name: 'new name',
+      name: 'ישראל',
       birthday: new Date(),
       // Select a random image from the selected theme's medallions
       medalThemeId: Math.floor(

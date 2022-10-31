@@ -12,14 +12,16 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 })
 export class MedallionDialogComponent {
   medallion!: IMedallion;
-  name: string = 'ישראל ישראלי';
-  birthday: Date = new Date('12/15/1973');
+  name!: string;
+  birthday!: Date;
 
   constructor(
     public dialogRef: MatDialogRef<MedallionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: any
   ) {
     this.medallion = data.medallion;
+    this.birthday = this.medallion.birthday;
+    this.name = this.medallion.name;
   }
 
   onDoneClicked() {
