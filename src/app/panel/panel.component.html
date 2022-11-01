@@ -1,1 +1,1 @@
-<img class="panel-img" [src]="'/assets/' + image" />
+<img *ngIf="theme" class="panel-img" [src]="'/assets/' + theme.image" />

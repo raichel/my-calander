@@ -4,6 +4,7 @@ import { CalanderFirebaseService } from './calander-firebase.service';
 import { ThemeFirebaseService } from './theme-firebase.service';
 import { ICalander, IMedallion, ICalanderTheme } from './calander.interfaces';
 import { MedallionDialogComponent } from './medallion-dialog/medallion-dialog.component';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +12,10 @@ import { MedallionDialogComponent } from './medallion-dialog/medallion-dialog.co
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  currentCalander!: ICalander;
-  currentTheme!: ICalanderTheme;
+  currentCalander: ICalander | undefined;
+  currentTheme: ICalanderTheme | undefined;
+  availableThemes!: ICalanderTheme[];
   CAL_ID = 'KBC9R47L5sTbrsnbFkLJ';
-  DEFAULT_THEME_ID = 'Off1vYew6Q3QumSmZwFn';
 
   constructor(
     private dialog: MatDialog,
@@ -22,7 +23,15 @@ export class AppComponent implements OnInit {
     private themeService: ThemeFirebaseService
   ) {}
 
+  onThemeSelected(themeId: string) {
+    this.currentTheme = this.availableThemes.find((cal) => cal.id == themeId);
+    if (this.currentCalander) this.currentCalander.themeId = themeId;
+  }
+
   ngOnInit() {
+    this.themeService.getAll().subscribe((data) => {
+      this.availableThemes = data;
+    });
     this.calanderService
       .getById(this.CAL_ID)
       .valueChanges()
@@ -76,6 +85,9 @@ export class AppComponent implements OnInit {
         exitAnimationDuration,
         data: {
           medallion: medallion,
+          medallionThemes: this.currentTheme
+            ? this.currentTheme.medallions
+            : [],
         },
       })
       .afterClosed()
@@ -83,18 +95,20 @@ export class AppComponent implements OnInit {
         if (result) {
           medallion.name = result['name'];
           medallion.birthday = result['birthday'];
+          medallion.medalThemeId = result['medalThemeId'];
         }
       });
   }
 
   onAddMedallionClick(): void {
+    if (!this.currentCalander) return;
     this.currentCalander.medallions.push({
       name: 'ישראל',
       birthday: new Date(),
       // Select a random image from the selected theme's medallions
-      medalThemeId: Math.floor(
-        Math.random() * this.currentTheme.medallions.length
-      ),
+      medalThemeId: this.currentTheme
+        ? Math.floor(Math.random() * this.currentTheme.medallions.length)
+        : 0,
     });
     this.updateCalander(this.CAL_ID, this.currentCalander);
   }

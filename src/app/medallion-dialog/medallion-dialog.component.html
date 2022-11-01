@@ -7,15 +7,22 @@
     <mat-form-field class="full-width" appearance="fill">
         <mat-label>תאריך לידה</mat-label>
         <input matInput [matDatepicker]="picker" [(ngModel)]="birthday">
-        <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matSuffix [for]="picker">
             <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
+    <BR>
+    <mat-label>בחר רקע לעיגול</mat-label>
+    <BR><BR>
+    <mat-button-toggle-group #group="matButtonToggleGroup" [(ngModel)]="medalThemeId" aria-label="Font Style">
+        <mat-button-toggle value="{{index}}" *ngFor="let medalTheme of medallionThemes; let index = index">
+            <img style="width: 80%;" [src]="'/assets/' + medalTheme.image" />
+        </mat-button-toggle>
+    </mat-button-toggle-group>
 </div>
 <BR><BR><BR><BR>
-<div mat-dialog-actions align="end" >
+<div mat-dialog-actions align="end">
     <button mat-fab color="secondary" aria-label="Close" (click)="onCancelClicked()">
         <mat-icon fontIcon="close"> </mat-icon>
     </button>

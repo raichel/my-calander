@@ -11,6 +11,7 @@ export interface IMedallion {
 }
 
 export interface ICalanderTheme {
+  id?: string;
   image: string;
   medallions: IMedallionTheme[];
 }

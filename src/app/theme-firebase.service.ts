@@ -3,6 +3,7 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
+import { map, Observable } from 'rxjs';
 import { ICalanderTheme } from './calander.interfaces';
 
 @Injectable({
@@ -15,6 +16,10 @@ export class ThemeFirebaseService {
 
   constructor(private store: AngularFirestore) {
     this.themes = store.collection(`/${this.COLLECTION_NAME}`);
+  }
+
+  getAll(): Observable<ICalanderTheme[]> {
+    return this.themes.valueChanges({ idField: 'id' });
   }
 
   getById(id: string) {

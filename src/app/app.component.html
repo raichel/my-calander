@@ -1,23 +1,30 @@
-<!-- Toolbar -->
-<div class="toolbar" role="banner">
-  <img width="40" alt="Angular Logo"
-    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" />
-  <span>Welcome to My Calander</span>
-</div>
-
 <div class="content">
-  <div class="calander-container" *ngIf="currentTheme != undefined" >
-    <app-panel class="app-panel" [image]="currentTheme.image"></app-panel>
-    <app-medallion *ngFor="let medallion of currentCalander?.medallions"
-      [style.gridColumn]="12 - medallion.birthday.getMonth()" [medallion]="medallion"
-      [theme]="currentTheme.medallions[medallion.medalThemeId]" (click)="onMedallionClick(medallion, '300ms', '150ms')"></app-medallion>
-  </div>
+  <mat-drawer-container>
+    <mat-drawer class="mat-drawer" mode="side" opened>
+      <h2 style="text-align: center;">סגנונות לבחירה</h2>
+      <div class="drawer-side-actions">
+        <mat-button-toggle-group vertical="true" #group="matButtonToggleGroup" [value]="currentCalander?.themeId"
+          (click)="onThemeSelected(group.value)" aria-label="Font Style">
+          <mat-button-toggle value="{{theme.id}}" *ngFor="let theme of availableThemes; let index = index">
+            <img class="theme-btn-image" [src]="'/assets/' + theme.image" />
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+        <BR><BR><BR><BR>
+        <button mat-fab color="accent" aria-label="הוסף" (click)="onAddMedallionClick()">
+          <mat-icon fontIcon="add"> </mat-icon>
+        </button>
+      </div>
+    </mat-drawer>
+    <mat-drawer-content class="mat-drawer-content" *ngIf="currentTheme != undefined">
+      <div class="calander-container">
+        <app-panel class="app-panel" [theme]="currentTheme"></app-panel>
+        <app-medallion *ngFor="let medallion of currentCalander?.medallions"
+          [style.gridColumn]="12 - medallion.birthday.getMonth()" [medallion]="medallion"
+          [theme]="currentTheme.medallions[medallion.medalThemeId]"
+          (click)="onMedallionClick(medallion, '300ms', '150ms')"></app-medallion>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
 </div>
-
-<footer>
-  <button mat-fab color="primary" aria-label="Add Medallion" (click)="onAddMedallionClick()">
-    <mat-icon fontIcon="add"> </mat-icon>
-  </button>
-</footer>
 
 <router-outlet></router-outlet>

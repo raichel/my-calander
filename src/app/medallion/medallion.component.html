@@ -1,4 +1,4 @@
-<div [@hover]="state">
+<div [@hover]="state" *ngIf="theme" >
     <img [src]="'/assets/' + theme.image" class="image"/>
     <div class="text-container" style="--top:{{theme.top + '%'}};--left:{{theme.left + '%'}};--fontSize:{{theme.fontSize + 'px'}};--fontColor:{{theme.fontColor}}">
         {{medallion.name}}<br>{{medallion.birthday | date:'dd/MM/YYYY'}}

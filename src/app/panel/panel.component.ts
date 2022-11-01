@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ICalander } from '../calander.interfaces';
+import { ICalanderTheme } from '../calander.interfaces';
 
 @Component({
   selector: 'app-panel',
@@ -7,5 +7,5 @@ import { ICalander } from '../calander.interfaces';
   styleUrls: ['./panel.component.css'],
 })
 export class PanelComponent {
-  @Input() image!: string;
+  @Input() theme!: ICalanderTheme;
 }

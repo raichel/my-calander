@@ -3,6 +3,7 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
 import { ICalander } from './calander.interfaces';
 
 @Injectable({
@@ -15,6 +16,10 @@ export class CalanderFirebaseService {
 
   constructor(private store: AngularFirestore) {
     this.calanders = store.collection(`/${this.COLLECTION_NAME}`);
+  }
+
+  getAll(): Observable<ICalander[]> {
+    return this.calanders.valueChanges({ idField: 'id' });
   }
 
   getById(id: string) {
