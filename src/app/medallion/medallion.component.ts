@@ -31,14 +31,18 @@ import { IMedallion, IMedallionTheme } from '../calander.interfaces';
 })
 export class MedallionComponent {
   state: string = 'default';
+  showDelBtn: boolean = false;
 
+  @Input() medallionIndex!: number;
   @Input() medallion!: IMedallion;
   @Input() theme!: IMedallionTheme;
-  @Output() medallionClicked = new EventEmitter<IMedallion>();
+  @Output() onEdit: EventEmitter<any> = new EventEmitter();
+  @Output() onDelete: EventEmitter<any> = new EventEmitter();
 
   @HostListener('mouseenter', ['$event'])
   @HostListener('mouseleave', ['$event'])
   onHover(event: MouseEvent) {
+    this.showDelBtn = event.type == 'mouseenter';
     const direction = event.type === 'mouseenter' ? 'in' : 'out';
     // const host = event.target as HTMLElement;
     // const w = host.offsetWidth;
@@ -48,5 +52,13 @@ export class MedallionComponent {
     // const states = ['top', 'right', 'bottom', 'left'];
     // const side = Math.round((((Math.atan2(y, x) * (180 / Math.PI)) + 180) / 90) + 3) % 4;
     this.state = direction === 'in' ? 'rotated' : 'default';
+  }
+
+  onMedallionClick(): void {
+    this.onEdit.emit();
+  }
+
+  onDeleteClick(event: Event): void {
+    this.onDelete.emit();
   }
 }

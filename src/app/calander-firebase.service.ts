@@ -23,15 +23,13 @@ export class CalanderFirebaseService {
   }
 
   getById(id: string) {
-    return this.calanders.doc(id);
+    return this.calanders.doc(id).valueChanges({ idField: 'id' });
   }
 
-  add(calander: ICalander): any {
-    return this.calanders.add({ ...calander });
-  }
-
-  edit(id: string, calander: ICalander) {
-    return this.calanders.doc(id).update(calander);
+  createOrUpdate(calander: ICalander): any {
+    // If the calander already has an ID, call "edit", else call "add"
+    if (calander.id) return this.calanders.doc(calander.id).update(calander);
+    else return this.calanders.add({ ...calander });
   }
 
   delete(id: string) {

@@ -1,6 +1,13 @@
-<div [@hover]="state" *ngIf="theme" >
-    <img [src]="'/assets/' + theme.image" class="image"/>
-    <div class="text-container" style="--top:{{theme.top + '%'}};--left:{{theme.left + '%'}};--fontSize:{{theme.fontSize + 'px'}};--fontColor:{{theme.fontColor}}">
-        {{medallion.name}}<br>{{medallion.birthday | date:'dd/MM/YYYY'}}
+<div class="medallion-container">
+    <div [@hover]="state" *ngIf="theme" (click)="onMedallionClick()">
+        <img [src]="'/assets/' + theme.image" class="image" />
+        <div class="text-container"
+            style="--top:{{theme.top + 'px'}};--left:{{theme.left + 'px'}};--fontSize:{{theme.fontSize + 'px'}};--fontColor:{{theme.fontColor}}">
+            {{medallion.name}}<br>{{medallion.birthday | date:'dd/MM/YYYY'}}
+        </div>
     </div>
+    <button class="delete-btn" *ngIf="showDelBtn" mat-icon-button color="warn"
+        (click)="onDeleteClick($event)">
+        <mat-icon>close</mat-icon>
+    </button>
 </div>

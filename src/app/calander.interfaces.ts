@@ -24,3 +24,15 @@ export interface IMedallionTheme {
   top: number;
   left: number;
 }
+
+export interface IOrder {
+  id?: string;
+  name: string;
+  phone: string;
+  city: string;
+  street: string;
+  houseNumber: number;
+  aptNumber?: number;
+  zipCode?: number;
+  calanderId: string;
+}

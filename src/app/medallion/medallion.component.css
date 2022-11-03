@@ -1,9 +1,10 @@
 img {
-    width: 80%;
+    width: 91px;
     margin-left: auto;
     margin-right: auto;
     display: block;
 }
+
 .text-container {
     position: absolute;
     margin-top: var(--top);
@@ -11,4 +12,16 @@ img {
     font-size: var(--fontSize);
     color: var(--fontColor);
     text-align: center;
+    font-family: 'Anka';
+}
+
+.medallion-container {
+    display: flex;
+    flex-direction: row-reverse;
+    cursor: pointer;
+}
+
+.delete-btn {
+    position: absolute;
+    margin: -10px -10px;
 }

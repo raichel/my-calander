@@ -11,6 +11,8 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { FormsModule } from '@angular/forms';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { MedallionDialogComponent } from './medallion-dialog/medallion-dialog.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { MedallionDialogComponent } from './medallion-dialog/medallion-dialog.co
     MedallionComponent,
     PanelComponent,
     MedallionDialogComponent,
+    OrderDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,7 @@ import { MedallionDialogComponent } from './medallion-dialog/medallion-dialog.co
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
   ],
-  providers: [],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

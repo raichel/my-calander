@@ -1,27 +1,32 @@
 <div class="content">
   <mat-drawer-container>
     <mat-drawer class="mat-drawer" mode="side" opened>
-      <h2 style="text-align: center;">סגנונות לבחירה</h2>
       <div class="drawer-side-actions">
+        <h2 class="step-title">נבחר סגנון</h2>
         <mat-button-toggle-group vertical="true" #group="matButtonToggleGroup" [value]="currentCalander?.themeId"
           (click)="onThemeSelected(group.value)" aria-label="Font Style">
           <mat-button-toggle value="{{theme.id}}" *ngFor="let theme of availableThemes; let index = index">
             <img class="theme-btn-image" [src]="'/assets/' + theme.image" />
           </mat-button-toggle>
         </mat-button-toggle-group>
-        <BR><BR><BR><BR>
+        <h2 class="step-title">נוסיף מדליונים</h2>
         <button mat-fab color="accent" aria-label="הוסף" (click)="onAddMedallionClick()">
           <mat-icon fontIcon="add"> </mat-icon>
+        </button>
+        <h2 class="step-title">סיימתי ואני רוצה להזמין</h2>
+        <button mat-fab color="accent" (click)="onDone('300ms', '150ms')">
+          <mat-icon fontIcon="done"> </mat-icon>
         </button>
       </div>
     </mat-drawer>
     <mat-drawer-content class="mat-drawer-content" *ngIf="currentTheme != undefined">
       <div class="calander-container">
         <app-panel class="app-panel" [theme]="currentTheme"></app-panel>
-        <app-medallion *ngFor="let medallion of currentCalander?.medallions"
-          [style.gridColumn]="12 - medallion.birthday.getMonth()" [medallion]="medallion"
+        <app-medallion *ngFor="let medallion of currentCalander?.medallions; let index = index"
+          [style.gridColumn]="12 - medallion.birthday.getMonth()" [medallion]="medallion" [medallionIndex]="index"
           [theme]="currentTheme.medallions[medallion.medalThemeId]"
-          (click)="onMedallionClick(medallion, '300ms', '150ms')"></app-medallion>
+          (onEdit)="onMedallionClick(medallion, index, '300ms', '150ms')"
+          (onDelete)="onMedallionDelete(index)"></app-medallion>
       </div>
     </mat-drawer-content>
   </mat-drawer-container>

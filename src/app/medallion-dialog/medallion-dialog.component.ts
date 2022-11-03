@@ -42,6 +42,10 @@ export class MedallionDialogComponent implements OnInit {
     });
   }
 
+  onDeleteClicked() {
+    this.dialogRef.close();
+  }
+
   onCancelClicked() {
     this.dialogRef.close();
   }

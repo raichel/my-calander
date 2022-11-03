@@ -23,6 +23,6 @@ export class ThemeFirebaseService {
   }
 
   getById(id: string) {
-    return this.themes.doc(id);
+    return this.themes.doc(id).valueChanges({ idField: 'id' });
   }
 }
