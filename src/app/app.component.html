@@ -1,6 +1,52 @@
 <div class="content">
   <mat-drawer-container>
-    <mat-drawer class="mat-drawer" mode="side" opened>
+    <mat-drawer-content class="mat-drawer-content" *ngIf="currentTheme != undefined">
+      <div class="calander-container">
+        <app-panel class="app-panel" [theme]="currentTheme"></app-panel>
+        <app-medallion *ngFor="let medallion of currentCalander?.medallions; let index = index"
+          [style.gridColumn]="12 - medallion.birthday.getMonth()" [medallion]="medallion" [medallionIndex]="index"
+          [theme]="currentTheme.medallions[medallion.medalThemeId]"
+          (onEdit)="onMedallionClick(medallion, index, '300ms', '150ms')" (onDelete)="onMedallionDelete(index)">
+        </app-medallion>
+      </div>
+    </mat-drawer-content>
+    <mat-drawer class="mat-drawer" mode="side" opened="true" position="end">
+      <mat-stepper orientation="vertical" [linear]="false" #stepper dir="rtl">
+        <mat-step>
+          <ng-template matStepLabel>נבחר עיצוב</ng-template>
+          <mat-button-toggle-group vertical="true" #group="matButtonToggleGroup" [value]="currentCalander?.themeId"
+            (click)="onThemeSelected(group.value)" aria-label="Font Style">
+            <mat-button-toggle value="{{theme.id}}" *ngFor="let theme of availableThemes; let index = index">
+              <img class="theme-btn-image" [src]="'/assets/' + theme.image" />
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>נוסיף מדליונים</ng-template>
+          <button mat-fab color="accent" aria-label="הוסף" (click)="onAddMedallionClick()">
+            <mat-icon fontIcon="add"> </mat-icon>
+          </button>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>סיימנו</ng-template>
+          <button mat-fab color="accent" (click)="onDone('300ms', '150ms')">
+            <mat-icon fontIcon="done"> </mat-icon>
+          </button>
+        </mat-step>
+      </mat-stepper>
+
+
+
+
+
+
+
+
+
+
+
+      <!-- 
+
       <div class="drawer-side-actions">
         <h2 class="step-title">נבחר סגנון</h2>
         <mat-button-toggle-group vertical="true" #group="matButtonToggleGroup" [value]="currentCalander?.themeId"
@@ -17,18 +63,8 @@
         <button mat-fab color="accent" (click)="onDone('300ms', '150ms')">
           <mat-icon fontIcon="done"> </mat-icon>
         </button>
-      </div>
+      </div> -->
     </mat-drawer>
-    <mat-drawer-content class="mat-drawer-content" *ngIf="currentTheme != undefined">
-      <div class="calander-container">
-        <app-panel class="app-panel" [theme]="currentTheme"></app-panel>
-        <app-medallion *ngFor="let medallion of currentCalander?.medallions; let index = index"
-          [style.gridColumn]="12 - medallion.birthday.getMonth()" [medallion]="medallion" [medallionIndex]="index"
-          [theme]="currentTheme.medallions[medallion.medalThemeId]"
-          (onEdit)="onMedallionClick(medallion, index, '300ms', '150ms')"
-          (onDelete)="onMedallionDelete(index)"></app-medallion>
-      </div>
-    </mat-drawer-content>
   </mat-drawer-container>
 </div>
 

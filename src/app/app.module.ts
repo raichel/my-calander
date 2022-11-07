@@ -8,7 +8,7 @@ import { PanelComponent } from './panel/panel.component';
 import { MaterialModule } from './material.module';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { MedallionDialogComponent } from './medallion-dialog/medallion-dialog.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
@@ -25,6 +25,7 @@ import { OrderDialogComponent } from './order-dialog/order-dialog.component';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MaterialModule,

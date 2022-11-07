@@ -18,7 +18,7 @@
   }
 
   .mat-drawer {
-    width: 200px;
+    width: 300px;
     height: 100%;
   }
 
@@ -41,7 +41,7 @@
 
   .theme-btn-image {
     width: 283%;
-    left: -91%;
+    left: 91%;
     position: relative;
   }
 

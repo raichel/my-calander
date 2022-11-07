@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IMedallion, IMedallionTheme } from '../calander.interfaces';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-medallion-dialog',
@@ -40,10 +39,6 @@ export class MedallionDialogComponent implements OnInit {
       birthday: this.birthday,
       medalThemeId: this.medalThemeId,
     });
-  }
-
-  onDeleteClicked() {
-    this.dialogRef.close();
   }
 
   onCancelClicked() {

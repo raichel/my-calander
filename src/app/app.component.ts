@@ -67,10 +67,8 @@ export class AppComponent implements OnInit {
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
-    console.log(`Medallion ${medallion.name} has been clicked`);
     this.dialog
       .open(MedallionDialogComponent, {
-        width: '600px',
         enterAnimationDuration,
         exitAnimationDuration,
         data: {
@@ -124,12 +122,12 @@ export class AppComponent implements OnInit {
           this.orderService.createOrUpdate({
             name: result['name'],
             phone: result['phone'],
-            city: result['city'],
-            street: result['street'],
-            houseNumber: result['houseNumber'],
-            aptNumber: result['aptNumber'],
-            zipCode: result['zipCode'],
             calanderId: this.currentCalander.id!,
+            // city: result['city'],
+            // street: result['street'],
+            // houseNumber: result['houseNumber'],
+            // aptNumber: result['aptNumber'],
+            // zipCode: result['zipCode'],
           });
         }
       });

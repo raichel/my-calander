@@ -1,1 +1,50 @@
-<p>order-dialog works!</p>
+<h1 mat-dialog-title class="header" dir="rtl">מזל טוב!!!</h1>
+<!-- <mat-card>
+    <mat-card-title >Phone Numbers with Angular Material Design</mat-card-title>
+    <mat-card-subtitle>Phone number formatting and validation with Angular Material Design
+    </mat-card-subtitle>
+    <mat-card-content> -->
+<div mat-dialog-content [dir]='"rtl"'>
+    <form class="profile" [formGroup]="profileForm">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>שם</mat-label>
+            <input matInput placeholder="שם מלא" formControlName="name" dir="rtl">
+        </mat-form-field>
+        <div formGroupName="phone">
+            <!-- <mat-form-field appearance="standard" class="phone_country">
+                    <mat-label>Country</mat-label>
+                    <mat-select formControlName="country" (selectionChange)="formatNumber()">
+                        <mat-option *ngFor="let countryCode of countyCodes" [value]="countryCode.code">
+                            {{countryCode.country}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+            <mat-form-field appearance="standard" class="phone_number full-width" dir="rtl">
+                <mat-label>מספר טלפון</mat-label>
+                <input formControlName="number" type="tel" placeholder="מספר טלפון" (input)="formatNumber()"
+                    [errorStateMatcher]="phoneErrorMatcher" matInput>
+                <mat-error *ngIf="!phoneGroup.valid">
+                    דוגמא למספר תקין: {{phoneHint}}
+                </mat-error>
+                <mat-hint>{{phoneHint}}</mat-hint>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<BR><BR><BR><BR>
+<div mat-dialog-actions class="dialog-actions" align="end">
+    <button mat-fab color="secondary" aria-label="Close" (click)="onCancelClicked()">
+        <mat-icon fontIcon="close"> </mat-icon>
+    </button>
+    <button mat-fab color="primary" aria-label="Done" (click)="onDoneClicked()"
+        [disabled]="!phoneGroup.valid || !this.phoneNumber.getNumber()">
+        <mat-icon fontIcon="done"> </mat-icon>
+    </button>
+</div>
+<!-- <mat-divider></mat-divider>
+        <p class="json-output"><code>PhoneNumber('{{phoneNumberDigits}}', '{{phoneCountryControl.value}}
+            ').toJSON()</code></p>
+        <pre>{{phoneNumber | json}}</pre>
+        <mat-card-footer><a href="https://mikedalrymple.com/angular-material-phone/">Blog Post</a> | <a href="https://github.com/mousedownco/angular-material-phone">GitHub Repository</a></mat-card-footer>
+    </mat-card-content>
+</mat-card> -->
